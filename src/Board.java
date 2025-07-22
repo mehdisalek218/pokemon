@@ -40,7 +40,24 @@ public class Board {
     public void attack(int attackerRow, int attackerCol, int targetRow, int targetCol) {
         Pokemon attacker = grid[attackerRow][attackerCol];
         Pokemon target = grid[targetRow][targetCol];
-        target.takeDamage(attacker.getAttack());
+        
+        // Determine who attacks first based on speed
+        if (attacker.getVit() >= target.getVit()) {
+            attacker.attaque(target);
+            if (target.getHp() > 0) {
+                target.attaque(attacker);
+            }
+        } else {
+            target.attaque(attacker);
+            if (attacker.getHp() > 0) {
+                attacker.attaque(target);
+            }
+        }
+
+        // Remove fainted Pokemon
+        if (attacker.getHp() <= 0) {
+            grid[attackerRow][attackerCol] = null;
+        }
         if (target.getHp() <= 0) {
             grid[targetRow][targetCol] = null;
         }
@@ -52,13 +69,24 @@ public class Board {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 Pokemon p = grid[i][j];
-                if (p != null && p.getName().equals("150")) {
-                    if (p.isPlayer1()) p1Mewtwo = true;
-                    else p2Mewtwo = true;
+                if (p != null) {
+                    if (p.getNumero() == 151) p1Mewtwo = true; // Mew for Player 1
+                    if (p.getNumero() == 150) p2Mewtwo = true; // Mewtwo for Player 2
                 }
             }
         }
         return p1Mewtwo && p2Mewtwo;
     }
-}
 
+    public boolean isMewAlive() {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                Pokemon p = grid[i][j];
+                if (p != null && p.getNumero() == 151) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
