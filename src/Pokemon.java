@@ -24,3 +24,4 @@ public class Pokemon {
     public int getAttack() { return attack; }
     public boolean isPlayer1() { return player1; }
 }
+

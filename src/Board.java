@@ -61,3 +61,4 @@ public class Board {
         return p1Mewtwo && p2Mewtwo;
     }
 }
+
