@@ -23,7 +23,15 @@ public class Pokemon {
         this.player1 = player1;
     }
     
+private int x, y;
 
+public int getX() { return x; }
+public int getY() { return y; }
+
+public void setPosition(int x, int y) {
+    this.x = x;
+    this.y = y;
+}
     public void takeDamage(int damage) {
         pv = Math.max(0, pv - damage);
     }

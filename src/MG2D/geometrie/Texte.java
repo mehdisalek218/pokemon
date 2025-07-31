@@ -14,7 +14,9 @@ public class Texte extends Dessin {
         this.texte = texte;
         this.police = police;
         this.position = position;
-    }
+    }public void setCouleur(Couleur c) {
+    this.couleur = c;
+}
 
     // Add these getters
     public Couleur getCouleur() { return couleur; }

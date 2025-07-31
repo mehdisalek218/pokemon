@@ -41,23 +41,10 @@ public class Board {
         Pokemon attacker = grid[attackerRow][attackerCol];
         Pokemon target = grid[targetRow][targetCol];
         
-        // Determine who attacks first based on speed
-        if (attacker.getVit() >= target.getVit()) {
-            attacker.attaque(target);
-            if (target.getHp() > 0) {
-                target.attaque(attacker);
-            }
-        } else {
-            target.attaque(attacker);
-            if (attacker.getHp() > 0) {
-                attacker.attaque(target);
-            }
-        }
+        // Only the attacker attacks the target, no counter-attack
+        attacker.attaque(target);
 
         // Remove fainted Pokemon
-        if (attacker.getHp() <= 0) {
-            grid[attackerRow][attackerCol] = null;
-        }
         if (target.getHp() <= 0) {
             grid[targetRow][targetCol] = null;
         }

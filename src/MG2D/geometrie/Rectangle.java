@@ -21,7 +21,9 @@ public class Rectangle extends Dessin {
     public boolean isPlein() { return plein; }
     public int getLargeur() { return largeur; }
     public int getHauteur() { return hauteur; }
-
+public void setCouleur(Couleur couleur) {
+    this.couleur = couleur;
+}
     @Override public Point getPosition() { return position; }
     @Override public void setPosition(Point p) { this.position = p; }
 }

@@ -1,12 +1,10 @@
 package MG2D;
 
-import MG2D.Couleur;
 import MG2D.geometrie.Dessin;
 import MG2D.geometrie.Image;
 import MG2D.geometrie.Point;
 import MG2D.geometrie.Rectangle;
 import MG2D.geometrie.Texte;
-
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
@@ -14,7 +12,7 @@ import java.awt.Graphics;
 
 public class Panneau extends JPanel {
     private List<Dessin> listeDessins = new ArrayList<>();
-    
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -55,7 +53,6 @@ public class Panneau extends JPanel {
             }
         } catch (Exception e) {
             System.err.println("Error drawing image: " + img.getChemin());
-            // Draw placeholder
             g.setColor(java.awt.Color.RED);
             g.fillRect(img.getPosition().getX(), img.getPosition().getY(), 
                        img.getLargeur(), img.getHauteur());
@@ -69,38 +66,50 @@ public class Panneau extends JPanel {
         g.drawString(txt.getTexte(), txt.getPosition().getX(), txt.getPosition().getY());
     }
 
-    // List management methods
-    public List<Dessin> getListeDessins() { 
-        return new ArrayList<>(listeDessins); // Return copy for safety
-    }
-    
-    public void ajouter(Dessin d) { 
-        if (d != null) {
-            listeDessins.add(d);
-        }
-    }
-    
-    public void ajouterTous(List<Dessin> dessins) { 
-        if (dessins != null) {
-            listeDessins.addAll(dessins);
-        }
-    }
-    
-    public void clear() {
-        listeDessins.clear();
+    public List<Dessin> getListeDessins() {
+        return new ArrayList<>(listeDessins);
     }
 
-    // Height accessor
+    public void ajouter(Dessin d) {
+        if (d != null) {
+            listeDessins.add(d);
+            repaint();
+        }
+    }
+
+    public void ajouterTous(List<Dessin> dessins) {
+        if (dessins != null) {
+            listeDessins.addAll(dessins);
+            repaint();
+        }
+    }
+
+    public void supprimer(Dessin d) {
+        if (d != null && listeDessins.contains(d)) {
+            listeDessins.remove(d);
+            repaint();
+        }
+    }
+
+    public void clear() {
+        listeDessins.clear();
+        repaint();
+    }
+
     public int getHauteur() {
         return this.getHeight();
     }
-    
-    // Additional useful methods
+
     public int getLargeur() {
         return this.getWidth();
     }
-    
+
     public void repaintPanneau() {
         this.repaint();
     }
+
+    public void remplacer(Dessin ancien, Dessin nouveau) {
+        supprimer(ancien);
+        ajouter(nouveau);
+}
 }
